@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlidingPuzzle_ZSSK"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="SlidingPuzzleSolver-ZSSK" Height="389.052" Width="767.494" ResizeMode="CanMinimize">
+    <Grid Margin="0,0,25.6,15.4">
+        <Grid Name="PuzzleGrid" HorizontalAlignment="Left" Height="274" Margin="49,41,0,0" VerticalAlignment="Top" Width="277" Background="#FFD7D7D7"/>
+        <ComboBox Name="SizeBox" Margin="386,77,217.2,233.8">
+            <ComboBoxItem Name="Size3" Content="3x3"/>
+            <ComboBoxItem Name="Size4" Content="4x4"/>
+            <ComboBoxItem Name="Size5" Content="5x5"/>
+            <ComboBoxItem Name="Size6" Content="6x6"/>
+        </ComboBox>
+        <Button Name="SelectButton" Content="Wybierz" HorizontalAlignment="Left" Margin="386,175,0,0" VerticalAlignment="Top" Width="122" Height="24"/>
+        <Button Name="ShuffleButton" Content="Mieszaj" HorizontalAlignment="Left" Margin="386,243,0,0" VerticalAlignment="Top" Width="122" Height="23"/>
+        <Button Name="SolveButton" Content="Rozwiąż" HorizontalAlignment="Left" Margin="556,243,0,0" VerticalAlignment="Top" Width="127" Height="23"/>
+        <Label Content="Wielkość:" HorizontalAlignment="Left" Margin="415,41,0,0" VerticalAlignment="Top" Width="68" FontSize="14"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="386,125,0,0" TextWrapping="Wrap" Text="Podaj wielkość..." VerticalAlignment="Top" Width="122"/>
+
     </Grid>
 </Window>
