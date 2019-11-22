@@ -15,6 +15,7 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-progra
 1. Zmienne
 
 var phrase;
+
 var manyPhrases;
 
 >> Żeby zmienne miały ten sam format
@@ -22,6 +23,7 @@ var manyPhrases;
 2. Metody i komentarze
 
 // Define a method that has a matching signature.
+
 public static void DelMethod(string str)
 
 >> Komentarze najlepiej opisać dla całych metod a nie dla pojedynczych linii
