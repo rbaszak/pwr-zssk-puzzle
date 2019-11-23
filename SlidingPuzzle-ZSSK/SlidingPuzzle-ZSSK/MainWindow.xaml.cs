@@ -44,7 +44,9 @@ namespace SlidingPuzzle_ZSSK
             SelectButton.Click += Select_Click;
             ShuffleButton.Click += Shuffle_Click;
             SizeTextBox.GotFocus += SizeTextBox_Click;
+            SolveButton.Click += Solve_Click;
         }
+
         #region Clear textbox on click
         void SizeTextBox_Click(object sender, EventArgs e)
         {
@@ -108,9 +110,19 @@ namespace SlidingPuzzle_ZSSK
         }
         #endregion
 
+        #region Solve on button click
+        void Solve_Click(object sender, RoutedEventArgs e)
+        {
+            //Timer start
+            //result = Solve(array);
+            //Timer stop
+            //result path and time to file
+        }
+        #endregion
+
         #region Image Load
-        //Load and split image from file to grid
-        void LoadImg(int gridSize)
+            //Load and split image from file to grid
+            void LoadImg(int gridSize)
         {
             var img = Image.FromFile(Environment.CurrentDirectory + "\\media\\test.jpg");
             for (int i = 0; i < gridSize; i++)
