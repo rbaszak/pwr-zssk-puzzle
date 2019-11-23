@@ -34,6 +34,7 @@ namespace SlidingPuzzle_ZSSK
         public int[,] array;
         public int size;
         Image[] imgarray;
+        List<System.Windows.Controls.Image> images;
 
         //Main window init
         public MainWindow()
@@ -94,15 +95,16 @@ namespace SlidingPuzzle_ZSSK
         void Shuffle_Click(object sender, RoutedEventArgs e)
         {
             Shuffle(array, size);
-            image1.Source = ToImageSource(imgarray[array[0,0]], ImageFormat.Jpeg);
-            image2.Source = ToImageSource(imgarray[array[0,1]], ImageFormat.Jpeg);
-            image3.Source = ToImageSource(imgarray[array[0,2]], ImageFormat.Jpeg);
-            image4.Source = ToImageSource(imgarray[array[1,0]], ImageFormat.Jpeg);
-            image5.Source = ToImageSource(imgarray[array[1,1]], ImageFormat.Jpeg);
-            image6.Source = ToImageSource(imgarray[array[1,2]], ImageFormat.Jpeg);
-            image7.Source = ToImageSource(imgarray[array[2,0]], ImageFormat.Jpeg);
-            image8.Source = ToImageSource(imgarray[array[2,1]], ImageFormat.Jpeg);
-            image0.Source = ToImageSource(imgarray[array[2,2]], ImageFormat.Jpeg);
+
+            int index = 0;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    images[index].Source = ToImageSource(imgarray[array[i, j]], ImageFormat.Jpeg);
+                    index++;
+                }
+            }
         }
         #endregion
 
@@ -118,7 +120,7 @@ namespace SlidingPuzzle_ZSSK
                     var index = i * 3 + j;
                     imgarray[index] = new Bitmap(104, 104);
                     var graphics = Graphics.FromImage(imgarray[index]);
-                    graphics.DrawImage(img, new Rectangle(0, 0, 104, 104), new Rectangle(i * 104, j * 104, 104, 104), GraphicsUnit.Pixel);
+                    graphics.DrawImage(img, new Rectangle(0, 0, 104, 104), new Rectangle(j * 104, i * 104, 104, 104), GraphicsUnit.Pixel);
                     graphics.Dispose();
                 }
             }
@@ -128,15 +130,23 @@ namespace SlidingPuzzle_ZSSK
             imgarray[8] = imgZero;
 
             //Load images to grid in order
-            image1.Source = ToImageSource(imgarray[0], ImageFormat.Jpeg);
-            image2.Source = ToImageSource(imgarray[3], ImageFormat.Jpeg);
-            image3.Source = ToImageSource(imgarray[6], ImageFormat.Jpeg);
-            image4.Source = ToImageSource(imgarray[1], ImageFormat.Jpeg);
-            image5.Source = ToImageSource(imgarray[4], ImageFormat.Jpeg);
-            image6.Source = ToImageSource(imgarray[7], ImageFormat.Jpeg);
-            image7.Source = ToImageSource(imgarray[2], ImageFormat.Jpeg);
-            image8.Source = ToImageSource(imgarray[5], ImageFormat.Jpeg);
-            image0.Source = ToImageSource(imgarray[8], ImageFormat.Jpeg);
+            images = new List<System.Windows.Controls.Image>();
+            
+            images.Add(image1);
+            images.Add(image2);
+            images.Add(image3);
+            images.Add(image4);
+            images.Add(image5);
+            images.Add(image6);
+            images.Add(image7);
+            images.Add(image8);
+            images.Add(image0);
+
+            for (int i = 0; i < size*size; i++)
+            {
+                images[i].Source = ToImageSource(imgarray[i], ImageFormat.Jpeg);
+            }
+
         }
         #endregion
 
