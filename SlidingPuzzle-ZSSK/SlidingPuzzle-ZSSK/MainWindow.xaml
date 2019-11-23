@@ -12,26 +12,6 @@
         <Button Name="SolveButton" Content="Rozwiąż" HorizontalAlignment="Left" Margin="556,243,0,0" VerticalAlignment="Top" Width="127" Height="23"/>
         <Label Content="Wielkość:" HorizontalAlignment="Left" Margin="386,81,0,0" VerticalAlignment="Top" Width="68" FontSize="14"/>
         <TextBox Name="SizeTextBox" HorizontalAlignment="Left" Height="23" Margin="386,125,0,0" TextWrapping="Wrap" Text="Podaj wielkość..." VerticalAlignment="Top" Width="122"/>
-        <Grid Name="PuzzleGrid" HorizontalAlignment="Left" Height="258" Margin="48,53,0,0" VerticalAlignment="Top" Width="258" Background="#FFDDDDDD">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Name="image1" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1"/>
-            <Image Name="image2" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Column="1"/>
-            <Image Name="image3" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Column="2"/>
-            <Image Name="image4" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1"/>
-            <Image Name="image5" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="1"/>
-            <Image Name="image6" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="1" Grid.Column="2"/>
-            <Image Name="image7" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="2"/>
-            <Image Name="image8" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="2" Grid.Column="1"/>
-            <Image Name="image0" HorizontalAlignment="Left" Height="86" Margin="0" VerticalAlignment="Top" Width="86" Grid.ColumnSpan="1" Grid.RowSpan="1" Grid.Row="2" Grid.Column="2"/>
-        </Grid>
+        <Grid Name="PuzzleGrid" HorizontalAlignment="Left" Height="258" Margin="48,53,0,0" VerticalAlignment="Top" Width="258" Background="#FFDDDDDD"/>
     </Grid>
 </Window>

@@ -69,7 +69,7 @@ namespace SlidingPuzzle_ZSSK
                 size = Convert.ToInt32(sizeText);
 
                 //Temporary debug (size always 3)
-                size = 3;
+                //size = 3;
 
                 //Set array size and fill
                 puzzle.SetArraySize(size);
@@ -159,44 +159,51 @@ namespace SlidingPuzzle_ZSSK
         #region Image Load
             //Load and split image from file to grid
             void LoadImg(int gridSize)
-        {
+            {
             var img = Image.FromFile(Environment.CurrentDirectory + "\\media\\test.jpg");
             for (int i = 0; i < gridSize; i++)
             {
                 for (int j = 0; j < gridSize; j++)
                 {
-                    var index = i * 3 + j;
-                    imgarray[index] = new Bitmap(104, 104);
+                    var index = i * gridSize + j;
+                    imgarray[index] = new Bitmap(312/gridSize, 312/gridSize);
                     var graphics = Graphics.FromImage(imgarray[index]);
-                    graphics.DrawImage(img, new Rectangle(0, 0, 104, 104), new Rectangle(j * 104, i * 104, 104, 104), GraphicsUnit.Pixel);
+                    graphics.DrawImage(img, new Rectangle(0, 0, 312/gridSize, 312/gridSize), new Rectangle(j * 312/gridSize, i * 312/gridSize, 312/gridSize, 312/gridSize), GraphicsUnit.Pixel);
                     graphics.Dispose();
                 }
             }
 
             //Add empty tile
             var imgZero = Image.FromFile(Environment.CurrentDirectory + "\\media\\zero.jpg");
-            imgarray[8] = imgZero;
+            imgarray[(gridSize*gridSize)-1] = imgZero;
 
-            //Load images to grid in order
+            //Load images to grid in order/Create rows and columns
             images = new List<System.Windows.Controls.Image>();
-            
-            images.Add(image1);
-            images.Add(image2);
-            images.Add(image3);
-            images.Add(image4);
-            images.Add(image5);
-            images.Add(image6);
-            images.Add(image7);
-            images.Add(image8);
-            images.Add(image0);
 
-            for (int i = 0; i < size*size; i++)
+            int ind = 0;
+            for (int i = 0; i < gridSize; i++)
+            {
+                PuzzleGrid.RowDefinitions.Add(new RowDefinition());
+                PuzzleGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                for (int j = 0; j < gridSize; j++)
+                {
+                    images.Add(new System.Windows.Controls.Image());
+                    PuzzleGrid.Children.Add(images[ind]);
+                    Grid.SetColumn(images[ind], j);
+                    Grid.SetColumnSpan(images[ind], 1);
+                    Grid.SetRow(images[ind], i);
+                    Grid.SetRowSpan(images[ind], 1);
+                    ind++;
+                }
+            }
+
+            for (int i = 0; i < gridSize * gridSize; i++)
             {
                 images[i].Source = ToImageSource(imgarray[i], ImageFormat.Jpeg);
             }
 
-        }
-        #endregion
+            }
+            #endregion
 
         #region Convert Image
         public static ImageSource ToImageSource(System.Drawing.Image image, ImageFormat imageFormat)
