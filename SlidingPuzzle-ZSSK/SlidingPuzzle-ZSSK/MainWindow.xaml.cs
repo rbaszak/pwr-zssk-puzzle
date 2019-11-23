@@ -20,6 +20,7 @@ using System.Windows.Shapes;
 using Image = System.Drawing.Image;
 using Rectangle = System.Drawing.Rectangle;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace SlidingPuzzle_ZSSK
 {
@@ -31,10 +32,12 @@ namespace SlidingPuzzle_ZSSK
         //Init global variables
         private static Random rng = new Random();
         public Puzzle puzzle = new Puzzle();
+        public Solver solver = new Solver();
         public int[,] array;
         public int size;
-        Image[] imgarray;
-        List<System.Windows.Controls.Image> images;
+        public string path = Environment.CurrentDirectory + "\\results.txt";
+        public Image[] imgarray;
+        public List<System.Windows.Controls.Image> images;
 
         //Main window init
         public MainWindow()
@@ -113,10 +116,43 @@ namespace SlidingPuzzle_ZSSK
         #region Solve on button click
         void Solve_Click(object sender, RoutedEventArgs e)
         {
-            //Timer start
-            //result = Solve(array);
-            //Timer stop
-            //result path and time to file
+            //Wyczyść plik z wynikami
+            File.WriteAllText(path, String.Empty);
+
+            //Przykład dla brute force BFS
+            Stopwatch stopwatch = new Stopwatch();
+
+            //Dodaj tablicę do rozwiązania
+            solver.SetArrayToSolve(array, size);
+
+            stopwatch.Start();
+
+            //Rozwiąż
+            solver.BruteForceBFS();
+
+            stopwatch.Stop();
+
+            //Odczytaj wyniki
+            var time = stopwatch.Elapsed.TotalMilliseconds;
+            var result = solver.GetResultArray();
+            var resultPath = solver.GetResultPath();
+            var numOfMoves = resultPath.Count;
+
+            //Wyświetl ułożony obraz na ekranie
+            int index = 0;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    images[index].Source = ToImageSource(imgarray[result[i, j]], ImageFormat.Jpeg);
+                    index++;
+                }
+            }
+
+            //Zapisz i wyświetl wyniki
+            File.AppendAllText(path, time.ToString());
+            Console.WriteLine("Time elapsed (milliseconds): " + time);
+            Console.WriteLine("Number of moves: " + numOfMoves);
         }
         #endregion
 
@@ -221,11 +257,6 @@ namespace SlidingPuzzle_ZSSK
             Shuffle(tempList);
 
             //Convert back to array
-            foreach(int item in tempList)
-            {
-                Console.WriteLine(item);
-            }
-
             for (int i = 0; i < gridSize; i++)
             {
                 for (int j = 0; j < gridSize; j++)
