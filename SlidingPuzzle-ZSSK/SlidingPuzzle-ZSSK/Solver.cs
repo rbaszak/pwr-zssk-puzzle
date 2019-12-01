@@ -43,9 +43,13 @@ public class Solver
         }
     }
 
-    public void Move(int a, dir direction) //Move tile 'a' in a defined direction
+    public void SetResultArray()
     {
         result = array;
+    }   //Set result array as initial array for the first run
+
+    public void Move(int a, dir direction) //Move tile 'a' in a defined direction
+    {
         int[,] temp = result;
         int coordsX = 999;
         int coordsY = 999;
@@ -119,8 +123,55 @@ public class Solver
         result = temp;
     }
 
-    public void GetConnectedToZero()
+    public List<int> GetAdjacentToEmpty() //Returns list of numbers of tiles adjacent to empty tile
     {
+        var items = new List<int>();
 
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (result[j, i] == 8)
+                {
+                    try
+                    {
+                        items.Add(result[j - 1,i]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("No item up.");
+                    }
+
+                    try
+                    {
+                        items.Add(result[j + 1, i]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("No item down.");
+                    }
+
+                    try
+                    {
+                        items.Add(result[j, i - 1]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("No item left.");
+                    }
+
+                    try
+                    {
+                        items.Add(result[j, i + 1]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("No item right.");
+                    }
+                    break;
+                }
+            }
+        }
+        return items;
     }
 }

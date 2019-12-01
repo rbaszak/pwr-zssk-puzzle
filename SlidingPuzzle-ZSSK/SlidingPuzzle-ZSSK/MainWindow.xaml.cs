@@ -127,34 +127,26 @@ namespace SlidingPuzzle_ZSSK
 
             //Dodaj tablicę do rozwiązania
             solver.SetArrayToSolve(array, size);
+            solver.SetResultArray();
 
             stopwatch.Start();
 
             //Rozwiąż
-            //solver.BruteForceBFS();
-            //solver.Move(8, Solver.dir.UP);
+            solver.BruteForceBFS();
 
             stopwatch.Stop();
 
             //Odczytaj wyniki
-            //var time = stopwatch.Elapsed.TotalMilliseconds;
-            //var result = solver.GetResultArray();
-            //var resultPath = solver.GetResultPath();
+            var time = stopwatch.Elapsed.TotalMilliseconds;
+            var result = solver.GetResultArray();
+            var resultPath = solver.GetResultPath();
             //var numOfMoves = resultPath.Count;
-            /*
+
             //Wyświetl ułożony obraz na ekranie
-            int index = 0;
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < size; j++)
-                {
-                    images[index].Source = ToImageSource(imgarray[result[i, j]], ImageFormat.Jpeg);
-                    index++;
-                }
-            }
-            */
+            Print();
+            
             //Zapisz i wyświetl wyniki
-            //File.AppendAllText(path, time.ToString());
+            File.AppendAllText(path, time.ToString());
             //Console.WriteLine("Time elapsed (milliseconds): " + time);
             //Console.WriteLine("Number of moves: " + numOfMoves);
         }
