@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlidingPuzzle_ZSSK"
         mc:Ignorable="d"
-        Title="SlidingPuzzleSolver-ZSSK" Height="389.052" Width="767.494" ResizeMode="CanMinimize">
+        Title="SlidingPuzzleSolver-ZSSK" Height="389.052" Width="767.494" ResizeMode="CanMinimize" KeyDown ="OnKeyDownHandler">
     <Grid Margin="0,0,25.6,15.4">
         <Button Name="SelectButton" Content="Wybierz" HorizontalAlignment="Left" Margin="386,175,0,0" VerticalAlignment="Top" Width="122" Height="24"/>
         <Button Name="ShuffleButton" Content="Mieszaj" HorizontalAlignment="Left" Margin="386,243,0,0" VerticalAlignment="Top" Width="122" Height="23"/>

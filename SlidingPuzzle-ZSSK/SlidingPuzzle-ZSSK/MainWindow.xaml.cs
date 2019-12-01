@@ -85,6 +85,9 @@ namespace SlidingPuzzle_ZSSK
                 //Create image array and load
                 imgarray = new Image[(size * size)];
                 LoadImg(size);
+
+                SizeTextBox.IsEnabled = false;
+
             }
             else
             {
@@ -128,16 +131,17 @@ namespace SlidingPuzzle_ZSSK
             stopwatch.Start();
 
             //Rozwiąż
-            solver.BruteForceBFS();
+            //solver.BruteForceBFS();
+            //solver.Move(8, Solver.dir.UP);
 
             stopwatch.Stop();
 
             //Odczytaj wyniki
-            var time = stopwatch.Elapsed.TotalMilliseconds;
-            var result = solver.GetResultArray();
-            var resultPath = solver.GetResultPath();
-            var numOfMoves = resultPath.Count;
-
+            //var time = stopwatch.Elapsed.TotalMilliseconds;
+            //var result = solver.GetResultArray();
+            //var resultPath = solver.GetResultPath();
+            //var numOfMoves = resultPath.Count;
+            /*
             //Wyświetl ułożony obraz na ekranie
             int index = 0;
             for (int i = 0; i < size; i++)
@@ -148,11 +152,11 @@ namespace SlidingPuzzle_ZSSK
                     index++;
                 }
             }
-
+            */
             //Zapisz i wyświetl wyniki
-            File.AppendAllText(path, time.ToString());
-            Console.WriteLine("Time elapsed (milliseconds): " + time);
-            Console.WriteLine("Number of moves: " + numOfMoves);
+            //File.AppendAllText(path, time.ToString());
+            //Console.WriteLine("Time elapsed (milliseconds): " + time);
+            //Console.WriteLine("Number of moves: " + numOfMoves);
         }
         #endregion
 
@@ -160,7 +164,7 @@ namespace SlidingPuzzle_ZSSK
             //Load and split image from file to grid
             void LoadImg(int gridSize)
             {
-            var img = Image.FromFile(Environment.CurrentDirectory + "\\media\\test.jpg");
+            var img = Image.FromFile(Environment.CurrentDirectory + "\\media\\testNum.jpg");
             for (int i = 0; i < gridSize; i++)
             {
                 for (int j = 0; j < gridSize; j++)
@@ -203,6 +207,9 @@ namespace SlidingPuzzle_ZSSK
             }
 
             }
+
+                
+
             #endregion
 
         #region Convert Image
@@ -269,6 +276,48 @@ namespace SlidingPuzzle_ZSSK
                 for (int j = 0; j < gridSize; j++)
                 {
                     arr[i, j] = tempList[index];
+                    index++;
+                }
+            }
+        }
+        #endregion
+
+        #region Temporary key movement
+        public void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+
+            if(e.Key == Key.Up)
+            {
+                solver.Move(8, Solver.dir.UP);
+            }
+            if (e.Key == Key.Down)
+            {
+                solver.Move(8, Solver.dir.DOWN);
+
+            }
+            if (e.Key == Key.Left)
+            {
+                solver.Move(8, Solver.dir.LEFT);
+
+            }
+            if (e.Key == Key.Right)
+            {
+                solver.Move(8, Solver.dir.RIGHT);
+            }
+            Print();
+        }
+        #endregion
+
+        #region Result print function
+        public void Print()
+        {
+            var result = solver.GetResultArray();
+            int index = 0;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    images[index].Source = ToImageSource(imgarray[result[i, j]], ImageFormat.Jpeg);
                     index++;
                 }
             }
