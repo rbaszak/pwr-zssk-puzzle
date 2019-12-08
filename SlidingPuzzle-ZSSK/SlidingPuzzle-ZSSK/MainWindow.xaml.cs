@@ -38,6 +38,7 @@ namespace SlidingPuzzle_ZSSK
         public string path = Environment.CurrentDirectory + "\\results.txt";
         public Image[] imgarray;
         public List<System.Windows.Controls.Image> images;
+        public bool multicore = false;
 
         //Main window init
         public MainWindow()
@@ -48,6 +49,25 @@ namespace SlidingPuzzle_ZSSK
             ShuffleButton.Click += Shuffle_Click;
             SizeTextBox.GotFocus += SizeTextBox_Click;
             SolveButton.Click += Solve_Click;
+            LoadPreset.Click += LoadPreset_Click;
+        }
+
+        void LoadPreset_Click(object sender, EventArgs e)
+        {
+            string preset = PresetText.Text;
+            array = solver.FromState(preset);
+
+            int index = 0;
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    images[index].Source = ToImageSource(imgarray[array[i, j]], ImageFormat.Jpeg);
+                    index++;
+                }
+            }
+
+            solver.SetArrayToSolve(array, size);
         }
 
         #region Clear textbox on click
@@ -67,9 +87,6 @@ namespace SlidingPuzzle_ZSSK
             {
                 //Set grid size
                 size = Convert.ToInt32(sizeText);
-
-                //Temporary debug (size always 3)
-                //size = 3;
 
                 //Set array size and fill
                 puzzle.SetArraySize(size);
@@ -113,42 +130,55 @@ namespace SlidingPuzzle_ZSSK
                     index++;
                 }
             }
+
+            solver.SetArrayToSolve(array, size);
+            PresetText.Text = solver.ToState(solver.result);
         }
         #endregion
 
         #region Solve on button click
         void Solve_Click(object sender, RoutedEventArgs e)
         {
+
             //Wyczyść plik z wynikami
             File.WriteAllText(path, String.Empty);
 
-            //Przykład dla brute force BFS
-            Stopwatch stopwatch = new Stopwatch();
-
             //Dodaj tablicę do rozwiązania
             solver.SetArrayToSolve(array, size);
-            solver.SetResultArray();
-
-            stopwatch.Start();
 
             //Rozwiąż
-            solver.BruteForceBFS();
+            if (!multicore)
+            {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+                solver.BruteForceBFSSingleCore();
+                stopwatch.Stop();
+                var time = stopwatch.Elapsed.TotalMilliseconds;
 
-            stopwatch.Stop();
+                //Zapisz i wyświetl wyniki
+                File.AppendAllText(path, time.ToString());
+                Console.WriteLine("Time elapsed (milliseconds): " + time);
+                //Console.WriteLine("Number of moves: " + numOfMoves);
+
+                TimeLabel.Content = "Time elapsed (milliseconds): " + time;
+
+                var result = solver.GetResultArray();
+            }
+            else
+            {
+                solver.BruteForceBFSMultiCore();
+
+                var result = solver.GetResultArray();
+            }
 
             //Odczytaj wyniki
-            var time = stopwatch.Elapsed.TotalMilliseconds;
-            var result = solver.GetResultArray();
-            var resultPath = solver.GetResultPath();
+           
+            //var resultPath = solver.GetResultPath();
             //var numOfMoves = resultPath.Count;
 
             //Wyświetl ułożony obraz na ekranie
             Print();
-            
-            //Zapisz i wyświetl wyniki
-            File.AppendAllText(path, time.ToString());
-            //Console.WriteLine("Time elapsed (milliseconds): " + time);
-            //Console.WriteLine("Number of moves: " + numOfMoves);
+
         }
         #endregion
 
@@ -170,7 +200,7 @@ namespace SlidingPuzzle_ZSSK
             }
 
             //Add empty tile
-            var imgZero = Image.FromFile(Environment.CurrentDirectory + "\\media\\zero.jpg");
+            var imgZero = Image.FromFile(Environment.CurrentDirectory + "\\media\\zeroNum.jpg");
             imgarray[(gridSize*gridSize)-1] = imgZero;
 
             //Load images to grid in order/Create rows and columns
@@ -199,8 +229,6 @@ namespace SlidingPuzzle_ZSSK
             }
 
             }
-
-                
 
             #endregion
 
@@ -277,24 +305,53 @@ namespace SlidingPuzzle_ZSSK
         #region Temporary key movement
         public void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            solver.SetArrayToSolve(array, size);
 
-            if(e.Key == Key.Up)
+            var result = solver.GetResultArray();
+
+            if (e.Key == Key.Up)
             {
-                solver.Move(8, Solver.dir.UP);
+                if(size == 3)
+                {
+                    solver.Move(8, Solver.dir.UP);
+                }
+                else
+                {
+                    solver.Move(15, Solver.dir.UP);
+                }
             }
             if (e.Key == Key.Down)
             {
-                solver.Move(8, Solver.dir.DOWN);
-
+                if (size == 3)
+                {
+                    solver.Move(8, Solver.dir.DOWN);
+                }
+                else
+                {
+                    solver.Move(15, Solver.dir.DOWN);
+                }
             }
             if (e.Key == Key.Left)
             {
-                solver.Move(8, Solver.dir.LEFT);
-
+                if (size == 3)
+                {
+                    solver.Move(8, Solver.dir.LEFT);
+                }
+                else
+                {
+                    solver.Move(15, Solver.dir.LEFT);
+                }
             }
             if (e.Key == Key.Right)
             {
-                solver.Move(8, Solver.dir.RIGHT);
+                if (size == 3)
+                {
+                    solver.Move(8, Solver.dir.RIGHT);
+                }
+                else
+                {
+                    solver.Move(15, Solver.dir.RIGHT);
+                }
             }
             Print();
         }
@@ -313,6 +370,20 @@ namespace SlidingPuzzle_ZSSK
                     index++;
                 }
             }
+        }
+        #endregion
+
+        #region Cores Checked
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            multicore = true;
+        }
+        #endregion
+
+        #region Cores Unchecked
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            multicore = false;
         }
         #endregion
     }
