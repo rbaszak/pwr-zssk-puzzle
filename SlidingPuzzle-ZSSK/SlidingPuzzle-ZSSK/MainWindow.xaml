@@ -1,0 +1,21 @@
+﻿<Window x:Class="SlidingPuzzle_ZSSK.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SlidingPuzzle_ZSSK"
+        mc:Ignorable="d"
+        Title="SlidingPuzzleSolver-ZSSK" Height="389.052" Width="767.494" ResizeMode="CanMinimize" KeyDown ="OnKeyDownHandler">
+    <Grid Margin="0,0,25.6,15.4">
+        <Button Name="SelectButton" Content="Wybierz" HorizontalAlignment="Left" Margin="386,175,0,0" VerticalAlignment="Top" Width="122" Height="24"/>
+        <Button Name="ShuffleButton" Content="Mieszaj" HorizontalAlignment="Left" Margin="386,243,0,0" VerticalAlignment="Top" Width="122" Height="23"/>
+        <Button Name="SolveButton" Content="Rozwiąż" HorizontalAlignment="Left" Margin="556,243,0,0" VerticalAlignment="Top" Width="127" Height="23"/>
+        <Label Content="Wielkość:" HorizontalAlignment="Left" Margin="386,81,0,0" VerticalAlignment="Top" Width="68" FontSize="14"/>
+        <TextBox Name="SizeTextBox" HorizontalAlignment="Left" Height="23" Margin="386,125,0,0" TextWrapping="Wrap" Text="Podaj wielkość..." VerticalAlignment="Top" Width="122"/>
+        <Grid Name="PuzzleGrid" HorizontalAlignment="Left" Height="258" Margin="48,53,0,0" VerticalAlignment="Top" Width="258" Background="#FFDDDDDD"/>
+        <CheckBox Content="Wielowątkowość" HorizontalAlignment="Left" Margin="556,180,0,0" VerticalAlignment="Top" Width="127" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+        <TextBox Name="PresetText" HorizontalAlignment="Left" Height="23" Margin="386,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="012345678"/>
+        <Button Name="LoadPreset" Content="Wczytaj preset" HorizontalAlignment="Left" Margin="556,288,0,0" VerticalAlignment="Top" Width="127" Height="23"/>
+        <Label Name="TimeLabel" Content="" HorizontalAlignment="Left" Margin="386,316,0,-0.2" VerticalAlignment="Top" Height="28" Width="297"/>
+    </Grid>
+</Window>
